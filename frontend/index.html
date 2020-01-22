@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form id="form">
+        <input type="text" name="nome" id="nome">
+        <input type="text" name="github" id="github">
+        <button type="submit">Enviar</button>
+    </form>
+    <script>
+
+        let form = document.getElementById('form');
+        //quando o formuario for enviado
+        form.onsubmit = (event) =>{
+            //para nao atualizar a pagina ou tentar ir para uma outra cancelamos o evento, usando preventDefault.Pq se atualizar eu perco os dados.
+            event.preventDefault();
+            //pegar info dos inputs.Seleciona pega o valor e ja coloca dentro da variavel nome.
+            let nomeProfissional = document.getElementById('nome').value;
+            let githubProfissional =  document.getElementById('github').value;
+            //criar um objeto que vou passar de configurações para o fetch.
+            let config = {
+                method: "POST",
+                //solicitação sempre viaja pelo body.
+                body:JSON.stringify({nome:nomeProfissional, github:githubProfissional})
+            }
+            fetch('http://localhost:8000/api/profissionais', config)
+            .then(function(resposta){
+                return resposta.json();
+            }).then(function(json){
+                console.log(json);
+            })
+            
+        }
+    
+    </script>
+</body>
+</html>
